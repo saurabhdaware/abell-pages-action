@@ -3,7 +3,9 @@ const exec = util.promisify(require('child_process').exec);
 const process = require('process');
 
 const core = require('@actions/core');
-const github = require('@actions/github');
+
+const ref = process.env.GITHUB_REF;
+const branch = ref.slice(ref.lastIndexOf('/'));
 
 
 const gitSetup = `
@@ -13,12 +15,11 @@ password ${process.env.GITHUB_TOKEN}
 machine api.github.com
 login ${process.env.GITHUB_ACTOR}
 password ${process.env.GITHUB_TOKEN}
-git checkout -B gh-pages
 git config --global user.email bot@abelljs.org
 git config --global user.name abell-bot
 git add docs
 git commit -m "docs commited to the repository" --no-verify
-git push https://github.com/${process.env.GITHUB_REPOSITORY} gh-pages
+git push https://github.com/${process.env.GITHUB_REPOSITORY} ${branch}:gh-pages
 `;
 
 
@@ -26,9 +27,6 @@ async function main() {
   const sitePath = core.getInput('site-path') || 'example';
 
   let meta = core.getInput('meta-path');
-
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
 
   if (!meta) {
     meta = {};
