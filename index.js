@@ -12,11 +12,12 @@ password ${process.env.GITHUB_TOKEN}
 machine api.github.com
 login ${process.env.GITHUB_ACTOR}
 password ${process.env.GITHUB_TOKEN}
+git checkout -B gh-pages
 git config --global user.email bot@abelljs.org
 git config --global user.name abell-bot
 git add docs
 git commit -m "docs commited to the repository" --no-verify
-git push
+git push ${process.env.GITHUB_REPOSITORY} gh-pages
 `;
 
 
