@@ -30,7 +30,7 @@ async function main() {
     try {
       const {stdout, stderr} = await exec(`cd ${sitePath} && npx abell build`); 
       if (stdout) console.log(stdout);
-      if (stderr) core.setFailed(stderr);
+      if (stderr) console.log(stderr);
       console.log('Created Docs site 🚀');
     } catch (err) {
       core.setFailed(err.message);
@@ -44,7 +44,7 @@ async function main() {
     try {
       const {stdout, stderr} = await exec(gitSetup);
       if (stdout) console.log(stdout);
-      if (stderr) core.setFailed(stderr);
+      if (stderr) console.log(stderr);
 
       console.log('Setting up git');
       console.log('Committed to branch 🌻');
