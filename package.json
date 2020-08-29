@@ -4,9 +4,7 @@
   "description": "Just playing around GitHub Actions",
   "main": "index.js",
   "dependencies": {
-    "@actions/core": "^1.2.5",
-    "abell-renderer": "^0.2.0",
-    "remarkable": "^2.0.1"
+    "@actions/core": "^1.2.5"
   },
   "devDependencies": {},
   "scripts": {
