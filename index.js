@@ -17,7 +17,7 @@ git config --global user.email bot@abelljs.org
 git config --global user.name abell-bot
 git add docs
 git commit -m "docs commited to the repository" --no-verify
-git push ${process.env.GITHUB_REPOSITORY} gh-pages
+git push https://github.com/${process.env.GITHUB_REPOSITORY} gh-pages
 `;
 
 
