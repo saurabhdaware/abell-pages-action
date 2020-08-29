@@ -5,7 +5,7 @@ const process = require('process');
 const core = require('@actions/core');
 
 const ref = process.env.GITHUB_REF;
-const branch = ref.slice(ref.lastIndexOf('/'));
+const branch = ref.slice(ref.lastIndexOf('/') + 1);
 
 
 const gitSetup = `
@@ -27,6 +27,8 @@ async function main() {
   const sitePath = core.getInput('site-path') || 'example';
 
   let meta = core.getInput('meta-path');
+
+  console.log(process.env);
 
   if (!meta) {
     meta = {};
