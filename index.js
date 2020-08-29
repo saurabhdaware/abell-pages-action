@@ -4,22 +4,12 @@ const process = require('process');
 
 const core = require('@actions/core');
 
-const ref = process.env.GITHUB_REF;
-const branch = ref.slice(ref.lastIndexOf('/') + 1);
-
-
 const gitSetup = `
-machine github.com
-login ${process.env.GITHUB_ACTOR}
-password ${process.env.GITHUB_TOKEN}
-machine api.github.com
-login ${process.env.GITHUB_ACTOR}
-password ${process.env.GITHUB_TOKEN}
 git config --global user.email bot@abelljs.org
 git config --global user.name abell-bot
 git add docs
 git commit -m "docs commited to the repository" --no-verify
-git push https://github.com/${process.env.GITHUB_REPOSITORY} ${branch}:gh-pages --force
+git push https://github.com/${process.env.GITHUB_REPOSITORY} ${core.getInput('deploy-branch')}:gh-pages --force
 `;
 
 
@@ -40,7 +30,7 @@ async function main() {
     try {
       const {stdout, stderr} = await exec(`cd ${sitePath} && npx abell build`); 
       if (stdout) console.log(stdout);
-      if (stderr) console.log(stderr);
+      if (stderr) core.setFailed(stderr);
       console.log('Created Docs site 🚀');
     } catch (err) {
       core.setFailed(err.message);
@@ -50,12 +40,17 @@ async function main() {
 
 
   {
-    const {stdout, stderr} = await exec(gitSetup);
-    if (stdout) console.log(stdout);
-    if (stderr) console.log(stderr);
 
-    console.log('Setting up git');
-    console.log('Committed to branch 🌻');
+    try {
+      const {stdout, stderr} = await exec(gitSetup);
+      if (stdout) console.log(stdout);
+      if (stderr) core.setFailed(stderr);
+
+      console.log('Setting up git');
+      console.log('Committed to branch 🌻');
+    } catch (err) {
+      core.setFailed(err.message);
+    }
   }
 
 }

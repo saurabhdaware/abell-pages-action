@@ -1,6 +1,10 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
+  deploy-branch:
+    description: 'Path to Deploy Content from'
+    required: true
+    default: 'master'
   site-path:
     description: 'Path of the site'
     required: true
