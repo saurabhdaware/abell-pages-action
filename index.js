@@ -24,7 +24,7 @@ async function main() {
   const sitePath = core.getInput('site-path') || 'example';
 
   let meta = core.getInput('meta-path');
-  console.log(Object.keys(process.env).sort());
+  console.log(process.env);
   if (!meta) {
     meta = {};
   } else {
