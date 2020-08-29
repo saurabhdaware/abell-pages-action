@@ -3,6 +3,7 @@ const exec = util.promisify(require('child_process').exec);
 const process = require('process');
 
 const core = require('@actions/core');
+const github = require('@actions/github');
 
 
 const gitSetup = `
@@ -25,7 +26,10 @@ async function main() {
   const sitePath = core.getInput('site-path') || 'example';
 
   let meta = core.getInput('meta-path');
-  console.log(process.env);
+
+  const payload = JSON.stringify(github.context.payload, undefined, 2)
+  console.log(`The event payload: ${payload}`);
+
   if (!meta) {
     meta = {};
   } else {
