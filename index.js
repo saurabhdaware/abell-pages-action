@@ -5,33 +5,19 @@ const process = require('process');
 const core = require('@actions/core');
 
 
-// const gitSetup = (actor, token) => `
-// machine github.com
-// login ${actor}
-// password ${token}
-// machine api.github.com
-// login ${actor}
-// password ${token}
-// `;
-
-async function commitAndDeploy() {
-  // await exec("git", [
-  //   "config",
-  //   "--global",
-  //   "user.email",
-  //   "abell-bot@example.com",
-  // ]);
-  // await exec("git", ["config", "--global", "user.name", "abell-bot"]);
-  // await exec("git", ['checkout', 'gh-pages'])
-  // await exec("git", ['add', 'docs']);
-  // await exec("git", [
-  //   "commit",
-  //   "--no-verify",
-  //   "-m",
-  //   "docs commited to the repository"
-  // ]);
-  // await exec("git", ["push", 'origin', 'gh-pages']);
-};
+const gitSetup = `
+machine github.com
+login ${process.env.GITHUB_ACTOR}
+password ${process.env.GITHUB_TOKEN}
+machine api.github.com
+login ${process.env.GITHUB_ACTOR}
+password ${process.env.GITHUB_TOKEN}
+git config --global user.email bot@abelljs.org
+git config --global user.name abell-bot
+git add docs
+git commit -m "docs commited to the repository" --no-verify
+git push
+`;
 
 
 async function main() {
@@ -45,16 +31,32 @@ async function main() {
     meta = require(meta);
   }
 
-  const {stdout, stderr} = await exec(`cd ${sitePath} && npx abell build`); 
-  console.log(stdout);
-  console.log(stderr);
-  console.log('Created Docs site 🚀');
-  await commitAndDeploy();
-  console.log('Committed to branch');
+  {
+    try {
+      const {stdout, stderr} = await exec(`cd ${sitePath} && npx abell build`); 
+      if (stdout) console.log(stdout);
+      if (stderr) console.log(stderr);
+      console.log('Created Docs site 🚀');
+    } catch (err) {
+      core.setFailed(err.message);
+    }
+
+  }
+
+
+  {
+    const {stdout, stderr} = await exec(gitSetup);
+    if (stdout) console.log(stdout);
+    if (stderr) console.log(stderr);
+
+    console.log('Setting up git');
+    console.log('Committed to branch 🌻');
+  }
+
 }
 
 try {
   main();
-} catch (error) {
-  core.setFailed(error.message);
+} catch (err) {
+  core.setFailed(err.message);
 }
