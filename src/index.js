@@ -1,8 +1,10 @@
+const fs = require('fs');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const process = require('process');
 
 const core = require('@actions/core');
+const { rmdirRecursiveSync } = require('./helpers');
 
 const gitSetup = `
 git config --global user.email bot@abelljs.org
@@ -12,13 +14,28 @@ git commit -m "docs commited to the repository" --no-verify
 git push https://github.com/${process.env.GITHUB_REPOSITORY} ${core.getInput('deploy-branch')}:gh-pages --force
 `;
 
+// const gitSetup = ''
 
 async function main() {
-  const sitePath = core.getInput('site-path') || 'example';
+  let sitePath = core.getInput('site-path') || 'https://github.com/abelljs/abell-starter-minima';
+
+  if (sitePath.startsWith('https://github.com')) {
+    if (fs.existsSync('.abell')) {
+      rmdirRecursiveSync('.abell');
+    }
+
+    try {
+      const {stdout, stderr} = await exec(`git clone ${sitePath} .abell`);
+      if (stdout) console.log(stdout);
+      if (stderr) console.log(stderr);
+  
+      sitePath = '.abell';
+    } catch (err) {
+      core.setFailed(err.message);
+    }
+  }
 
   let meta = core.getInput('meta-path');
-
-  console.log(process.env);
 
   if (!meta) {
     meta = {};
@@ -27,6 +44,7 @@ async function main() {
   }
 
   {
+
     try {
       const {stdout, stderr} = await exec(`cd ${sitePath} && npx abell build`); 
       if (stdout) console.log(stdout);
