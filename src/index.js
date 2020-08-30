@@ -26,6 +26,7 @@ async function main() {
 
     try {
       const {stdout, stderr} = await exec(`git clone ${sitePath} .abell`);
+      rmdirRecursiveSync('.abell/.git');
       if (stdout) console.log(stdout);
       if (stderr) console.log(stderr);
   
