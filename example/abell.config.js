@@ -1,7 +1,7 @@
 const { __esModule } = require("remarkable");
 
 module.exports = {
-  outputPath: '../docs',
+  outputPath: 'site',
   themePath: 'theme',
   contentPath: 'theme'
 }
