@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-
+ 
 /**
  * Removes the folder
  * @param {String} pathToRemove path to the directory which you want to remove
