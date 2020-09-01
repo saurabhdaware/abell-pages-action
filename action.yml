@@ -9,10 +9,6 @@ inputs:
     description: 'Path of the site'
     required: true
     default: 'site'
-  meta-path:
-    description: 'Path of the layout'
-    required: false
-    default: ''
 runs:
   using: 'node12'
   main: 'src/index.js'
