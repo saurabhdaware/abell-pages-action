@@ -15,7 +15,7 @@ git push https://github.com/${process.env.GITHUB_REPOSITORY} ${core.getInput('de
 // const gitSetup = ''
 
 async function main() {
-  let sitePath = core.getInput('site-path') || 'https://github.com/abelljs/abell-starter-minima';
+  let sitePath = core.getInput('site-path') || 'example';
 
   if (sitePath.startsWith('https://github.com')) {
     if (fs.existsSync('.abell')) {
