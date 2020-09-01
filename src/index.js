@@ -8,7 +8,7 @@ const { rmdirRecursiveSync } = require('./helpers');
 
 const gitSetup = `
 git add .abell docs
-git commit -m "abell site commited to the repository" --no-verify --author abell-bot<bot@abelljs.org>
+git commit -m "abell site commited to the repository" --no-verify --author="abell-bot <bot@abelljs.org>"
 git push https://github.com/${process.env.GITHUB_REPOSITORY} ${core.getInput('deploy-branch')}:gh-pages --force
 `;
 
