@@ -61,7 +61,7 @@ async function build({sitePath, deployBranch, shouldCommit}) {
     const gitSetup = `
       git config user.email bot@abelljs.org
       git config user.name abell-bot
-      git add .abell docs
+      git add docs
       git commit -m "abell site commited to the repository" --no-verify
       git push https://github.com/${process.env.GITHUB_REPOSITORY} ${deployBranch}:gh-pages --force
     `;
