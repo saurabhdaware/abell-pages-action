@@ -1,18 +1,18 @@
 const core = require('@actions/core');
-const build = require('./build');
+const build = require('./build.js');
 
 try {
   build({
     sitePath: core.getInput('site-path'),
     deployBranch: core.getInput('deploy-branch'),
-    deployTo: 'gh-pages'
+    shouldCommit: true
   })
 
   // local run
   // build({
   //   sitePath: 'example',
   //   deployBranch: null,
-  //   deployTo: null
+  //   shouldCommit: false
   // })
 } catch (err) {
   core.setFailed(err.message);

@@ -7,7 +7,7 @@ const core = require('@actions/core');
 const { rmdirRecursiveSync } = require('./helpers');
 
 
-function build({sitePath, deployBranch, shouldCommit}) {
+async function build({sitePath, deployBranch, shouldCommit}) {
   // Pre Build Setup
   if (sitePath.startsWith('https://github.com')) {
     // if sitePath is repository

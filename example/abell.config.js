@@ -1,7 +1,9 @@
-const { __esModule } = require("remarkable");
-
+// Don't change any of these values as they have to be this way for action to run
 module.exports = {
-  outputPath: 'site',
-  themePath: 'theme',
-  contentPath: 'theme'
-}
+  contentPath: "theme",
+  themePath: "theme",
+  outputPath: "../docs",
+  globalMeta: {
+    userReadmeURL: "../../README.md"
+  }
+};

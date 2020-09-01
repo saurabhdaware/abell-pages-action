@@ -1,6 +1,6 @@
 <html>
 <body>
   Layout
-  {{ Abell.importContent('../README.md') }}
+  {{ Abell.importContent(Abell.globalMeta.userReadmeURL) }}
 </body>
 </html>
