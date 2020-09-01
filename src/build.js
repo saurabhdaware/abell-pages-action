@@ -26,6 +26,14 @@ async function build({sitePath, deployBranch, shouldCommit}) {
       core.setFailed(err.message);
     }
   }
+  
+  // create github meta data
+  const githubData = {
+    repository: process.env.GITHUB_REPOSITORY,
+    owner: process.env.GITHUB_REPOSITORY_OWNER
+  }
+
+  fs.writeFileSync(`./${sitePath}/githubData.json`, JSON.stringify(githubData, null, 2))
 
   // Run Abell Build
   {
@@ -39,8 +47,12 @@ async function build({sitePath, deployBranch, shouldCommit}) {
     }
   }
 
-  // post-build setup
+  // post-build cleanup
+  fs.unlinkSync(`./${sitePath}/githubData.json`);
 
+  if (sitePath === '.abell' && fs.existsSync('.abell')) {
+    rmdirRecursiveSync('.abell');
+  }
 
 
   // Configure git and commit to branch
