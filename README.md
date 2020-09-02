@@ -48,7 +48,7 @@ Set publish branch to `gh-pages` and publish directory to `/docs`
 
 GitHub Repository URL | path to folder.
 
-### `deploy-branch`
+#### `deploy-branch`
 
 Branch to deploy from. Shoud be same as the branch that triggers this action in `on: push:`
 
