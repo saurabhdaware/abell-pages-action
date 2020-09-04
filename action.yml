@@ -1,5 +1,6 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Abell Pages Action'
+author: 'saurabhdaware'
+description: 'Deploy your README.md as a Website on GitHub Pages'
 inputs:
   deploy-branch:
     description: 'Path to Deploy Content from'
@@ -12,3 +13,6 @@ inputs:
 runs:
   using: 'node12'
   main: 'src/index.js'
+branding:
+  icon: 'cloud'  
+  color: 'yellow'
