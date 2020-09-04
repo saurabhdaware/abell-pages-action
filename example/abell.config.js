@@ -14,8 +14,8 @@ if (fs.existsSync('../globalMeta.json')) {
 }
 
 module.exports = {
-  contentPath: "theme",
-  themePath: "theme",
+  contentPath: "layout",
+  themePath: "layout",
   outputPath: "../docs",
   globalMeta: {
     userReadmeURL: "../../README.md",
