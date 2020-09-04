@@ -21,7 +21,7 @@ jobs:
       uses: actions/checkout@v2
     - name: Abell Pages Action
       id: abell-pages
-      uses: saurabhdaware/abell-pages-action@master
+      uses: saurabhdaware/abell-pages-action@v0.10.0
       with:
         site-path: 'https://github.com/saurabhdaware/abell-readme-layout'
         deploy-branch: 'master' # branch to deploy from, should be same as on push branch
